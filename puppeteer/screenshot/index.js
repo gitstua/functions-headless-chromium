@@ -12,7 +12,7 @@ module.exports = async function (context, req) {
     console.log(`Time: ${diff1}ms`);
     
     //write the time taken onto the page so it is show in the screenshot
-    await page.evaluate(() => {
+    await page.evaluate((diff1) => {
         let dom = document.querySelector('#messages');
         dom.innerHTML = `Page load time: ${diff1}ms`;
     });
