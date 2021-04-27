@@ -38,14 +38,14 @@ module.exports = async function (context, req) {
     await page.evaluate((timetaken) => {
         let dom = document.querySelector('#messages');
         if (dom){
-            dom.innerHTML = `Page load time: ${timetaken}ms.`;
+            dom.innerHTML = `v2 Page load time: ${timetaken}ms`;
         }
         else
         {
             var p = document.createElement("p");
             p.id = 'messages';
             p.style.cssText = 'font-weight:bold;';
-            p.innerHTML = `Page load time: ${timetaken}ms.`;
+            p.innerHTML = `v2 Page load time: ${timetaken}ms`;
             document.body.prepend(p);
         }
     }, diffAverage);
