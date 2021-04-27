@@ -22,10 +22,11 @@ jobs:
     - name: 'Checkout GitHub Action'
       uses: actions/checkout@v2
 
-    - name: 'Login via Azure CLI'
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE964 }}
+  # Note: cannot use RBAC since it forces WEBSITE_RUN_FROM_PACKAGE - need to use publish profile
+    # - name: 'Login via Azure CLI'
+    #   uses: azure/login@v1
+    #   with:
+    #     creds: ${{ secrets.AZURE964 }}
 
     - name: Setup Node ${{ env.NODE_VERSION }} Environment
       uses: actions/setup-node@v1
@@ -46,5 +47,6 @@ jobs:
         app-name: 'sturesponse-au'
         slot-name: 'production'
         package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
+        publish-profile: ${{ secrets.AZURE_FN_PUBLISH_PROFILE_AU }}
         scm-do-build-during-deployment: true
         enable-oryx-build: true
