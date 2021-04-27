@@ -40,7 +40,7 @@ jobs:
         npm install
         popd
 
-    - name: 'Run Azure Functions Action'
+    - name: 'Run Azure Functions Action AU'
       uses: Azure/functions-action@v1
       id: fa
       with:
@@ -50,3 +50,24 @@ jobs:
         publish-profile: ${{ secrets.AZURE_FN_PUBLISH_PROFILE_AU }}
         scm-do-build-during-deployment: true
         enable-oryx-build: true
+    - name: 'Run Azure Functions Action US'
+      uses: Azure/functions-action@v1
+      id: fa2
+      with:
+        app-name: 'sturesponse-us'
+        slot-name: 'production'
+        package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
+        publish-profile: ${{ secrets.AZURE_FN_PUBLISH_PROFILE_US }}
+        scm-do-build-during-deployment: true
+        enable-oryx-build: true
+    - name: 'Run Azure Functions Action EU'
+      uses: Azure/functions-action@v1
+      id: fa3
+      with:
+        app-name: 'sturesponse-eu'
+        slot-name: 'production'
+        package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
+        publish-profile: ${{ secrets.AZURE_FN_PUBLISH_PROFILE_EU }}
+        scm-do-build-during-deployment: true
+        enable-oryx-build: true
+
