@@ -2,9 +2,16 @@ const puppeteer = require("puppeteer");
 
 module.exports = async function (context, req) {
     const url = req.query.url || "https://example.com/";
+    const imageType = req.query.type || "png";
+    const imageQuality = req.query.quality || 80;
+    const imageWidth = req.query.width || 800;
+    const imageHeight = req.query.height || 400;
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
-
+    const options = { fullPage: false, type: imageType, quality: Number(imageQuality), 
+        clip: {x: 0, y: 0, width: Number(imageWidth), height: Number(imageHeight)}
+    };
+    
     //time request
     let t1 = Date.now();
     await page.goto(url);
@@ -44,14 +51,14 @@ module.exports = async function (context, req) {
     }, diffAverage);
 
     //take screenshot
-    const screenshotBuffer = await page.screenshot({ fullPage: true });
+    const screenshotBuffer = await page.screenshot(options);
     await browser.close();
 
     //return the screenshot to the client
     context.res = {
         body: screenshotBuffer,
         headers: {
-            "content-type": "image/png"
+            "content-type": `image/${imageType}`
         }
     };
 };
