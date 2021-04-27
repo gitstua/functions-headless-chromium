@@ -48,6 +48,5 @@ jobs:
         app-name: 'sturesponse-au'
         slot-name: 'production'
         package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_d76cbe22c9e84440a8eeb5ef649149e9 }}
         scm-do-build-during-deployment: true
         enable-oryx-build: true
