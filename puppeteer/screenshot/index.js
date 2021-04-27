@@ -1,7 +1,7 @@
 const puppeteer = require("puppeteer");
 
 module.exports = async function (context, req) {
-    const url = req.query.url || "https://dadstaxi.azurefd.net/";
+    const url = req.query.url || "https://example.com/";
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
 
