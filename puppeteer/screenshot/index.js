@@ -30,7 +30,17 @@ module.exports = async function (context, req) {
     //write the time taken onto the page so it is show in the screenshot
     await page.evaluate((timetaken) => {
         let dom = document.querySelector('#messages');
-        dom.innerHTML = `Page load time: ${timetaken}ms`;
+        if (dom){
+            dom.innerHTML = `Page load time: ${timetaken}ms`;
+        }
+        else
+        {
+            var p = document.createElement("p");
+            p.id = 'messages';
+            p.style.cssText = 'font-weight:bold;';
+            p.innerHTML = `Page load time: ${timetaken}ms`;
+            document.body.prepend(p);
+        }
     }, diffAverage);
 
     //take screenshot
