@@ -11,7 +11,7 @@ module.exports = async function (context, req) {
     const options = { fullPage: false, type: imageType, quality: Number(imageQuality), 
         clip: {x: 0, y: 0, width: Number(imageWidth), height: Number(imageHeight)}
     };
-    if (imageType === "png){ options.quality = null; }
+    if (imageType === "png"){ delete options.quality; }
     
     //time request
     let t1 = Date.now();
