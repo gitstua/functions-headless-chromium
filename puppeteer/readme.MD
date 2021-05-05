@@ -9,3 +9,21 @@ Sample to include in an HTML page:
 ```
 # Sample url (please do not abuse as this will mean it will be rate limited)
 https://sturesponse-au.azurewebsites.net/api/screenshot?url=https://example.com/
+
+# Development
+## node version
+ensure you have node 8.x or 10.x
+If you have 14.x then use the following to install earlier version
+```
+sudo npm install -g n
+sudo n stable
+sudo n 10.16.0
+```
+
+## Running
+```
+cd puppeteer
+func build
+func start
+```
+
