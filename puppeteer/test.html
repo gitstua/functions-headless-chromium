@@ -6,56 +6,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Certificate checker</title>
     <style>
-        .dataRow span{
+        body{
+            font-family: MyCustomMonoFont, monospace, monospace;
+        }
+        .dataRow span.lbl{
             color: green;
             margin-left: 1em;
             margin-right: 1em;
         }
+        input{
+            width: 20em;
+            border-color: red;
+        }
     </style>
     <script>
-        const functionDomains= ['sturesponse-au.azurewebsites.net', 'sturesponse-us.azurewebsites.net', 
+        const functionDomains= ['sturesponse-AU.azurewebsites.net', 'sturesponse-US.azurewebsites.net', 
             'sturesponse-EU.azurewebsites.net'];
 
         function getJson(functionDomain, url){
             const requestUrl = `https://${functionDomain}/api/certcheck?url=${url}`;
 
-            fetch(url)
+            fetch(requestUrl)
             .then(function (response) {
                 console.log(response);
                 return response.json();
             })
             .then(function (data) {
-                appendData(data);
+                appendData(functionDomain, data);
             })
             .catch(function (err) {
                 console.log(err);
             });
         }
 
-        function appendData(data) {
+        function appendData(functionDomain, data) {
             var mainContainer = document.getElementById("myData");
 
             var div = document.createElement("div");
-                div.innerHTML = `Test from ${functionDomain} `
-                    + `<span>host:</span> ${data.securityDetails._subjectName}` 
-                    + `<span>expiryDate:</span>' ${data.expiryDate}`;
+                div.innerHTML = `<span class='testDomain'>Test from ${functionDomain}</span>`
+                    + `<span class="lbl">host:</span>${data.securityDetails._subjectName}` 
+                    + `<span class="lbl">expiryDate:</span>${data.expiryDate}`;
                 div.className = "dataRow";
                 mainContainer.appendChild(div);
-
-            // for (var i = 0; i < data.length; i++) {
-            //     var div = document.createElement("div");
-            //     div.innerHTML = 'expiryDate: ' + data[i].expiryDate; // + ' ' + data[i].lastName;
-            //     mainContainer.appendChild(div);
-            // }
         }
 
-
-        functionDomains.forEach(functionDomain => {
-            var usResponse = getJson(functionDomain,  "https://www.dadstaxiglobal.com")
-        });
+        function checkSite(){
+            functionDomains.forEach(functionDomain => {
+                const inputValue = document.getElementById("siteHostName").value;
+                var usResponse = getJson(functionDomain,  `https://${inputValue}`)
+            });
+        }
     </script>
 </head>
 <body>
+    <div id="footer">
+        <p>Made with ❤ by Stuart Eggerton @cloudy_stuey. Find code on <a href="https://github.com/gitstua/functions-headless-chromium">GitHub/GitStua</a></p>
+    </div>
+    <div id="siteDetails">
+        <span>https://</span><input id="siteHostName" type="url" value="www.dadstaxiglobal.com" />
+        <button type="button" onclick="checkSite()">Check site!</button>
+    </div>
+
     <div id="myData"></div>
 </body>
 </html>
