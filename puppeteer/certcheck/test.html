@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function getJson(url){
+            fetch('people.json')
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                appendData(data);
+            })
+            .catch(function (err) {
+                console.log(err);
+            });
+        }
+
+        function appendData(data) {
+            var mainContainer = document.getElementById("myData");
+
+            var div = document.createElement("div");
+                div.innerHTML = 'expiryDate: ' + data.expiryDate; // + ' ' + data[i].lastName;
+                mainContainer.appendChild(div);
+
+            // for (var i = 0; i < data.length; i++) {
+            //     var div = document.createElement("div");
+            //     div.innerHTML = 'expiryDate: ' + data[i].expiryDate; // + ' ' + data[i].lastName;
+            //     mainContainer.appendChild(div);
+            // }
+        }
+
+        var usResponse = getJson("http://sturesponse-us.azurewebsites.net/api/certcheck?url=https://www.dadstaxiglobal.com")
+    </script>
+</head>
+<body>
+    <div id="myData"></div>
+</body>
+</html>
