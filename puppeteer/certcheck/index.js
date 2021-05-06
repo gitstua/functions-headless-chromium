@@ -9,7 +9,7 @@ module.exports = async function (context, req) {
     const response = await page.goto(url)
     const securityDetails = response.securityDetails()
     const expiryDate = new Date(securityDetails.validTo() * 1000)
-    const validFrom = new Date(securityDetails.validFrom * 1000
+    const validFrom = new Date(securityDetails.validFrom * 1000)
     console.log(new Date(expiryDate))
 
     const resultsJson = { 
