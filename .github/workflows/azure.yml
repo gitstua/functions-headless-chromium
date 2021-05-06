@@ -23,10 +23,17 @@ jobs:
       uses: actions/checkout@v2
 
   # Note: cannot use RBAC since it forces WEBSITE_RUN_FROM_PACKAGE - need to use publish profile
-    # - name: 'Login via Azure CLI'
-    #   uses: azure/login@v1
-    #   with:
-    #     creds: ${{ secrets.AZURE964 }}
+    - name: 'Login via Azure CLI'
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE964 }}
+
+    - name: 'Set CORS on sites to include local test site '
+      shell: bash
+      run: |
+        az webapp cors add -g sturesponseau -n sturesponse-au --allowed-origins http://127.0.0.1:5500/test.html
+        az webapp cors add -g sturesponseau -n sturesponse-eu --allowed-origins http://127.0.0.1:5500/test.html
+        az webapp cors add -g sturesponseau -n sturesponse-us --allowed-origins http://127.0.0.1:5500/test.html
 
     - name: Setup Node ${{ env.NODE_VERSION }} Environment
       uses: actions/setup-node@v1
